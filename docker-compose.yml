@@ -1,0 +1,23 @@
+version: "3"
+services:
+  spark-master:
+    image: 3lr1ck/spark-master:2.4.2-hadoop2.7-jdk8
+    ports:
+      - "8080:8080"
+      - "7077:7077"
+    networks:
+      - spark-network
+
+  spark-worker:
+    image: 3lr1ck/spark-worker:2.4.2-hadoop2.7-jdk8
+    ports:
+      - "8081"
+    depends_on:
+      - spark-master
+    networks:
+      - spark-network
+    environment:
+      - "SPARK_MASTER=spark://spark-master:7077"
+
+networks:
+  spark-network:

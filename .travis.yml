@@ -1,0 +1,9 @@
+language: bash
+sudo: false
+
+script:
+  - bash build_images.sh
+
+after_script:
+  - docker image ls
+  - docker ps -a
