@@ -3,7 +3,7 @@
 set -e
 
 BASE_IMG_NAME=3lr1ck/spark-
-TAG=2.4.0-hadoop2.7-jdk8
+TAG=2.4.1-hadoop2.7-jdk8
 
 ################################################
 # Build docker image based on:
