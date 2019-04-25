@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
+env
+
 DOCKER_TARGET=
 
 case $DOCKER_REPO in
@@ -16,4 +18,4 @@ case $DOCKER_REPO in
     ;;
 esac
 echo "Building Spark docker image $IMAGE_NAME using stage $DOCKER_TARGET"
-docker build --target $DOCKER_TARGET -t $IMAGE_NAME -f docker/Dockerfile docker
+docker build --target $DOCKER_TARGET -t $IMAGE_NAME -f $DOCKERFILE_PATH docker
