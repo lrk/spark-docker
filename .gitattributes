@@ -1,2 +1,2 @@
 *.sh		text eol=lf
-hooks/build text  eol=lf
+docker/hooks/build text  eol=lf
