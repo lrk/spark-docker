@@ -5,15 +5,15 @@ DOCKER_TARGET=
 
 case $DOCKER_REPO in
   "spark-master")
-    $DOCKER_TARGET="master"
+    DOCKER_TARGET="master"
     ;;
   "spark-worker")
-    $DOCKER_TARGET="worker"
+    DOCKER_TARGET="worker"
     ;;
   *)
     echo "Unknown Docker repo (DOCKER_REPO), can't tell which target is being build !"
     exit -1
     ;;
 esac
-
+echo "Building Spark docker image $IMAGE_NAME using stage $DOCKER_TARGET"
 docker build --target $DOCKER_TARGET -t $IMAGE_NAME -f docker/Dockerfile docker
