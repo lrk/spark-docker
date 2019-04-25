@@ -5,7 +5,7 @@ ARG SPARK_ROOT=/spark
 ###############################################################################
 FROM openjdk:8-jdk-alpine as base
 
-MAINTAINER Lrk <sfxelrick@gmail.com>
+LABEL maintainer="sfxelrick@gmail.com"
 
 ARG SPARK_ROOT
 ARG SPARK_VERSION=2.4.2
@@ -23,7 +23,7 @@ RUN apk add --no-cache curl bash && \
 ###############################################################################
 FROM openjdk:8-jdk-alpine as master
 
-MAINTAINER Lrk <sfxelrick@gmail.com>
+LABEL maintainer="sfxelrick@gmail.com"
 
 ARG SPARK_ROOT
 
@@ -50,7 +50,7 @@ CMD ["/bin/bash", "/start-master.sh"]
 ###############################################################################
 FROM openjdk:8-jdk-alpine as worker
 
-MAINTAINER Lrk <sfxelrick@gmail.com>
+LABEL maintainer="sfxelrick@gmail.com"
 
 ARG SPARK_ROOT
 
@@ -71,3 +71,28 @@ RUN apk add --no-cache bash && \
 EXPOSE 8081
 
 CMD ["/bin/bash", "/start-worker.sh"]
+
+###############################################################################
+# Submit stage
+###############################################################################
+FROM openjdk:8-jdk-alpine as submit
+
+LABEL maintainer="sfxelrick@gmail.com"
+
+ARG SPARK_ROOT
+
+ENV SPARK_HOME=${SPARK_ROOT}
+ENV SPARK_MASTER_NAME spark-master
+ENV SPARK_MASTER_PORT 7077
+ENV SPARK_APPLICATION_JAR_LOCATION /app/application.jar
+ENV SPARK_APPLICATION_MAIN_CLASS my.main.Application
+ENV SPARK_APPLICATION_ARGS ""
+
+COPY start-submit.sh /
+
+RUN apk add --no-cache bash && \
+    ln -s ${SPARK_ROOT}/bin/* /usr/bin && \
+    ln -s ${SPARK_ROOT}/sbin/* /usr/sbin && \
+    chmod +x start-submit.sh
+
+CMD ["/bin/bash", "/start-submit.sh"]
