@@ -1,19 +1,17 @@
 #!/usr/bin/env bash
 set -e
 
-env
-
 DOCKER_TARGET=
 
 case $DOCKER_REPO in
-  "spark-master")
+  *master)
     DOCKER_TARGET="master"
     ;;
-  "spark-worker")
+  *worker)
     DOCKER_TARGET="worker"
     ;;
   *)
-    echo "Unknown Docker repo (DOCKER_REPO), can't tell which target is being build !"
+    echo "Unknown Docker repo ($DOCKER_REPO), can't tell which target is being build !"
     exit -1
     ;;
 esac
