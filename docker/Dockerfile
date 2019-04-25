@@ -88,6 +88,8 @@ ENV SPARK_APPLICATION_JAR_LOCATION /app/application.jar
 ENV SPARK_APPLICATION_MAIN_CLASS my.main.Application
 ENV SPARK_APPLICATION_ARGS ""
 
+COPY --from=base ${SPARK_ROOT} ${SPARK_ROOT}
+
 COPY start-submit.sh /
 
 RUN apk add --no-cache bash && \
