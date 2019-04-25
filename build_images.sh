@@ -6,3 +6,4 @@ TAG=2.4.2-hadoop2.7-jdk8
 
 docker build --target master -t $BASE_IMG_NAME-master:$TAG -f docker/Dockerfile docker
 docker build --target worker -t $BASE_IMG_NAME-worker:$TAG -f docker/Dockerfile docker
+docker build --target submit -t $BASE_IMG_NAME-submit:$TAG -f docker/Dockerfile docker

@@ -10,6 +10,9 @@ case $DOCKER_REPO in
   *worker)
     DOCKER_TARGET="worker"
     ;;
+  *submit)
+    DOCKER_TARGET="submit"
+    ;;
   *)
     echo "Unknown Docker repo ($DOCKER_REPO), can't tell which target is being build !"
     exit -1
