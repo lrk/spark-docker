@@ -23,8 +23,8 @@ esac
 if [ "$DOCKER_TAG" = "latest" ]; then
   echo "Building Spark docker image $IMAGE_NAME using stage $DOCKER_TARGET"
 else
-  SPARK_VERSION=$("echo ${DOCKER_TAG} | sed -r 's/(.+)-hadoop(.+)-jdk8/\1/'")
-  HADOOP_VERSION=$("echo ${DOCKER_TAG} | sed -r 's/(.+)-hadoop(.+)-jdk8/\2/'")
+  SPARK_VERSION=$(echo ${DOCKER_TAG} | sed -r 's/(.+)-hadoop(.+)-jdk8/\1/')
+  HADOOP_VERSION=$(echo ${DOCKER_TAG} | sed -r 's/(.+)-hadoop(.+)-jdk8/\2/')
   echo "Building Spark docker image $IMAGE_NAME using stage $DOCKER_TARGET for spark version ${SPARK_VERSION} and hadoop ${HADOOP_VERSION}"
   BUILD_ARGS="${BUILD_ARGS} --build-arg SPARK_VERSION=${SPARK_VERSION} --build-arg HADOOP_VERSION=${HADOOP_VERSION}"
 fi
