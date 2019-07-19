@@ -20,7 +20,7 @@ case $DOCKER_REPO in
     ;;
 esac
 
-if [ "$DOCKER_TAG" = "latest"]; then
+if [ "$DOCKER_TAG" = "latest" ]; then
   echo "Building Spark docker image $IMAGE_NAME using stage $DOCKER_TARGET"
 else
   SPARK_VERSION=$("echo ${DOCKER_TAG} | sed -r 's/(.+)-hadoop(.+)-jdk8/\1/'")
