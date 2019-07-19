@@ -1,6 +1,11 @@
 language: bash
 sudo: false
 
+env:
+  - SPARK_VERSION=2.4.3 HADOOP_VERSION=2.7
+  - SPARK_VERSION=2.4.2 HADOOP_VERSION=2.7
+  - SPARK_VERSION=2.2.0 HADOOP_VERSION=2.7
+
 script:
   - bash build_images.sh
 
