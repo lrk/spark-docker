@@ -2,6 +2,7 @@
 set -e
 
 DOCKER_TARGET=
+BUILD_ARGS=
 
 case $DOCKER_REPO in
   *master)
@@ -18,5 +19,14 @@ case $DOCKER_REPO in
     exit -1
     ;;
 esac
-echo "Building Spark docker image $IMAGE_NAME using stage $DOCKER_TARGET"
-docker build --target $DOCKER_TARGET -t $IMAGE_NAME -f $DOCKERFILE_PATH .
+
+if [ "$DOCKER_TAG" = "latest"]; then
+  echo "Building Spark docker image $IMAGE_NAME using stage $DOCKER_TARGET"
+else
+  SPARK_VERSION=$("echo ${DOCKER_TAG} | sed -r 's/(.+)-hadoop(.+)-jdk8/\1/'")
+  HADOOP_VERSION=$("echo ${DOCKER_TAG} | sed -r 's/(.+)-hadoop(.+)-jdk8/\2/'")
+  echo "Building Spark docker image $IMAGE_NAME using stage $DOCKER_TARGET for spark version ${SPARK_VERSION} and hadoop ${HADOOP_VERSION}"
+  BUILD_ARGS="${BUILD_ARGS} --build-arg SPARK_VERSION=${SPARK_VERSION} --build-arg HADOOP_VERSION=${HADOOP_VERSION}"
+fi
+echo "Build arguments: ${BUILD_ARGS}"
+docker build ${BUILD_ARGS} --target $DOCKER_TARGET -t $IMAGE_NAME -f $DOCKERFILE_PATH .
